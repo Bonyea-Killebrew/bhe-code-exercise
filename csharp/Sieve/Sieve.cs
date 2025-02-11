@@ -11,12 +11,15 @@ public class SieveImplementation : ISieve
     ///
     private bool isPrime(long n, ref List<long> pList)
     {
+        double highestRoot = Math.Sqrt(n);
         for (int d = 0; d < pList.Count; d++)
         {
             if (n % pList[d] == 0)
             {
                 return false;
             }
+            if (pList[d] > highestRoot)
+            { return true; }
         }
         return true;
     }
@@ -31,7 +34,12 @@ public class SieveImplementation : ISieve
     /// 3 - where n = 1,000,000, the run-time is ~30m
     /// 4 - where n = 10,000,000, the run-time is ~160m
     /// The run-times are consistent with iteration through n integers.
+    /// 
+    /// 11th Hour Update:
+    /// Added a test to helper method to exclude x > Sqrt(n) in the list of primes.
+    /// This cut the run-time to ~2m for the 10M-th prime.
     /// <param>n</param> The index of the prime number to return. In this case, it is always the last.
+    /// 
     public long NthPrime(long n)
     {
         List<long> primeList = new List<long>();
